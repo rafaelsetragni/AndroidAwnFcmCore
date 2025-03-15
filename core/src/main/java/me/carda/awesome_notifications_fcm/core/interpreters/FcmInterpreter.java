@@ -41,7 +41,9 @@ import me.carda.awesome_notifications_fcm.core.FcmDefinitions;
 import me.carda.awesome_notifications_fcm.core.broadcasters.broadcasters.FcmBroadcaster;
 import me.carda.awesome_notifications_fcm.core.builders.FcmNotificationBuilder;
 import me.carda.awesome_notifications_fcm.core.licenses.LicenseManager;
+import me.carda.awesome_notifications_fcm.core.models.PushNotificationInterceptor;
 import me.carda.awesome_notifications_fcm.core.models.SilentDataModel;
+import me.carda.awesome_notifications_fcm.core.services.AwesomeFcmService;
 
 
 public class FcmInterpreter {
@@ -123,7 +125,7 @@ public class FcmInterpreter {
                                         exception);
                     }
             }
-            return processPushContent(context, intent, dontCallFlutter);
+            return processPushContent(context, intent, AwesomeFcmService.pushNotificationInterceptor, dontCallFlutter);
         } catch (AwesomeNotificationsException ignored) {
         } catch (Exception exception) {
             ExceptionFactory
@@ -137,12 +139,23 @@ public class FcmInterpreter {
         return null;
     }
 
-    private static RemoteMessage processPushContent(Context context, Intent intent, boolean dontCallFlutter) throws AwesomeNotificationsException {
+    private static RemoteMessage processPushContent(Context context, Intent intent, PushNotificationInterceptor interceptor, boolean dontCallFlutter) throws AwesomeNotificationsException {
         Bundle extras = intent.getExtras();
         if (extras == null)
             extras = new Bundle();
 
         RemoteMessage remoteMessage = new RemoteMessage(extras);
+
+        // Interception and decision point
+        if (interceptor != null) {
+            RemoteMessage intercepted = interceptor.intercept(remoteMessage);
+            if (intercepted == null) {
+                // Interceptor has decided to stop awesome processing
+                return remoteMessage;
+            } else {
+                remoteMessage = intercepted;
+            }
+        }
 
         deliveryAwesomeNotification(
                 context,

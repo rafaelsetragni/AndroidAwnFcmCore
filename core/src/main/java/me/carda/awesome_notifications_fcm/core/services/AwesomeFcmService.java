@@ -28,6 +28,7 @@ import me.carda.awesome_notifications_fcm.core.AwesomeNotificationsFcm;
 import me.carda.awesome_notifications_fcm.core.broadcasters.broadcasters.FcmBroadcaster;
 import me.carda.awesome_notifications_fcm.core.interpreters.FcmInterpreter;
 import me.carda.awesome_notifications_fcm.core.mocking_google.SendException;
+import me.carda.awesome_notifications_fcm.core.models.PushNotificationInterceptor;
 
 
 public abstract class AwesomeFcmService extends FirebaseMessagingService {
@@ -36,9 +37,15 @@ public abstract class AwesomeFcmService extends FirebaseMessagingService {
 
     public abstract void initializeExternalPlugins(Context context) throws Exception;
 
+    public static PushNotificationInterceptor pushNotificationInterceptor;
+
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    public static void setPushNotificationInterceptor(PushNotificationInterceptor interceptor){
+        pushNotificationInterceptor = interceptor;
     }
 
     @Override

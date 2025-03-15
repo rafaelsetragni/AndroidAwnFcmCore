@@ -2,26 +2,20 @@ package me.carda.awesome_notifications_fcm.core;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailabilityLight;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.carda.awesome_notifications.core.AwesomeNotifications;
 import me.carda.awesome_notifications.core.AwesomeNotificationsExtension;
 import me.carda.awesome_notifications.core.Definitions;
 import me.carda.awesome_notifications.core.broadcasters.receivers.AwesomeEventsReceiver;
@@ -36,10 +30,8 @@ import me.carda.awesome_notifications.core.models.NotificationModel;
 import me.carda.awesome_notifications.core.models.returnedData.ActionReceived;
 import me.carda.awesome_notifications.core.models.returnedData.NotificationReceived;
 import me.carda.awesome_notifications.core.utils.MapUtils;
-import me.carda.awesome_notifications.core.utils.StringUtils;
 import me.carda.awesome_notifications_fcm.core.background.FcmBackgroundExecutor;
 import me.carda.awesome_notifications_fcm.core.broadcasters.receivers.AwesomeFcmEventsReceiver;
-import me.carda.awesome_notifications_fcm.core.licenses.LicenseManager;
 import me.carda.awesome_notifications_fcm.core.listeners.AwesomeFcmSilentListener;
 import me.carda.awesome_notifications_fcm.core.listeners.AwesomeFcmTokenListener;
 import me.carda.awesome_notifications_fcm.core.managers.FcmDefaultsManager;
@@ -48,7 +40,6 @@ import me.carda.awesome_notifications_fcm.core.mocking_google.NotificationAnalyt
 import me.carda.awesome_notifications_fcm.core.models.FcmOptions;
 import me.carda.awesome_notifications_fcm.core.services.AwesomeFcmService;
 import me.carda.awesome_notifications_fcm.core.services.FcmSenderService;
-import me.carda.awesome_notifications_fcm.core.services.FcmSilentService;
 
 public class AwesomeNotificationsFcm
     implements
@@ -62,7 +53,6 @@ public class AwesomeNotificationsFcm
     public static boolean firebaseEnabled = false;
 
     private final WeakReference<Context> wContext;
-
 
     // *****************************************************************
     ///      CONSTRUCTOR
