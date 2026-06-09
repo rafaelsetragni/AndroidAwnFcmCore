@@ -30,13 +30,11 @@ public final class FcmDefaultsManager {
 
     public static void saveDefault(
             @NonNull Context context,
-            @Nullable List<String> licenseKeys,
             @Nullable Long dartCallback,
             @Nullable Long silentCallback
     ) throws AwesomeNotificationsException {
         FcmDefaultsModel defaults = getDefaults(context);
 
-        defaults.licenseKeys = licenseKeys == null ? new ArrayList<>() : licenseKeys;
         defaults.reverseDartCallback = dartCallback == null ? null : dartCallback.toString();
         defaults.silentDataCallback = silentCallback == null ? null : silentCallback.toString();
 
@@ -60,11 +58,6 @@ public final class FcmDefaultsManager {
     public static long getDartCallbackDispatcher(Context context) throws AwesomeNotificationsException {
         FcmDefaultsModel defaults = getDefaults(context);
         return (defaults.reverseDartCallback != null) ? Long.parseLong(defaults.reverseDartCallback) : 0L;
-    }
-
-    public static List<String> getLicenseKeys(Context context) throws AwesomeNotificationsException {
-        FcmDefaultsModel defaults = getDefaults(context);
-        return defaults.licenseKeys;
     }
 
     public static void commitChanges(Context context) throws AwesomeNotificationsException {

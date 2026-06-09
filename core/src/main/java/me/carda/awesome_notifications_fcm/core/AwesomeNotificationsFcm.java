@@ -39,7 +39,6 @@ import me.carda.awesome_notifications.core.utils.MapUtils;
 import me.carda.awesome_notifications.core.utils.StringUtils;
 import me.carda.awesome_notifications_fcm.core.background.FcmBackgroundExecutor;
 import me.carda.awesome_notifications_fcm.core.broadcasters.receivers.AwesomeFcmEventsReceiver;
-import me.carda.awesome_notifications_fcm.core.licenses.LicenseManager;
 import me.carda.awesome_notifications_fcm.core.listeners.AwesomeFcmSilentListener;
 import me.carda.awesome_notifications_fcm.core.listeners.AwesomeFcmTokenListener;
 import me.carda.awesome_notifications_fcm.core.managers.FcmDefaultsManager;
@@ -170,7 +169,6 @@ public class AwesomeNotificationsFcm
     }
 
     public boolean initialize(
-            List<String> licenseKeys,
             long dartCallback,
             long silentCallback,
             boolean debug
@@ -181,7 +179,6 @@ public class AwesomeNotificationsFcm
         FcmDefaultsManager
                 .saveDefault(
                         context,
-                        licenseKeys,
                         dartCallback,
                         silentCallback);
 
