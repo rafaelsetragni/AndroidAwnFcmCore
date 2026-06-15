@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish'
+    id 'com.vanniktech.maven.publish' version '0.34.0'
 }
 
 group 'me.carda.awesome_notifications_fcm.core'
-version '0.10.0'
+version '0.12.0'
 
 android {
     compileSdkVersion = 34
@@ -33,19 +33,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-
-    publishing {
-        singleVariant('release') {
-            withSourcesJar()
-            withJavadocJar()
-        }
-
-        singleVariant('debug') {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 def firebaseCoreProject = findProject(':firebase_core')
@@ -59,7 +46,7 @@ def getRootProjectExtOrCoreProperty(name, firebaseCoreProject) {
 }
 
 dependencies {
-    implementation 'me.carda:AndroidAwnCore:0.10.0'
+    implementation 'me.carda:AndroidAwnCore:0.12.0'
 //    implementation project(':awn_core')
 
     implementation 'com.google.android.gms:play-services-base:18.5.0'
@@ -92,16 +79,34 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release (MavenPublication) {
-                from components.findByName('release')
+mavenPublishing {
+    // Central Portal (central.sonatype.com) is the default and only host in vanniktech 0.34.0.
+    publishToMavenCentral()
+    signAllPublications()
 
-                groupId = 'me.carda'
-                artifactId = 'AwnFcmAndroidCore'
-                version = '0.10.0'
+    coordinates('me.carda', 'AndroidAwnFcmCore', '0.12.0')
+
+    pom {
+        name = 'Awesome Notifications FCM Android Core'
+        description = 'Native Android Firebase Cloud Messaging core for the Awesome Notifications FCM Flutter plugin.'
+        url = 'https://github.com/rafaelsetragni/AndroidAwnFcmCore'
+        licenses {
+            license {
+                name = 'The Apache License, Version 2.0'
+                url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
             }
+        }
+        developers {
+            developer {
+                id = 'rafaelsetragni'
+                name = 'Rafael Setragni'
+                url = 'https://github.com/rafaelsetragni/'
+            }
+        }
+        scm {
+            url = 'https://github.com/rafaelsetragni/AndroidAwnFcmCore'
+            connection = 'scm:git:git://github.com/rafaelsetragni/AndroidAwnFcmCore.git'
+            developerConnection = 'scm:git:ssh://git@github.com/rafaelsetragni/AndroidAwnFcmCore.git'
         }
     }
 }
