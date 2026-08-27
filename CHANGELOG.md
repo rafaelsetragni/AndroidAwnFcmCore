@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.12.1] - 2026-08-27
+### Fixed
+- **Debug Toast and Log removed from `BootBroadcastReceiver`:** every device boot showed a leftover `"Service restarted"` toast (and logged `"Service tried to stop"`) to every end user of apps shipping `awesome_notifications_fcm`. Both debug statements were removed. Thanks to @igordanilovski (#1).
+
+### Updated
+- **Native library updated:** AndroidAwnCore updated to 0.12.1.
+- **Published artifacts now match the source:** the 0.12.0 artifact on Maven Central was built before the SDK 36/dependency updates were merged; 0.12.1 ships the current source state (compileSdk/targetSdk 36, updated dependencies).
+
+## [0.12.0] - 2026-06-15
+### Changed
+- **Publishing migrated to Maven Central:** `me.carda:AndroidAwnFcmCore` is now published on Maven Central (via the vanniktech maven-publish plugin) instead of JitPack; the artifactId was corrected from `AwnFcmAndroidCore` to `AndroidAwnFcmCore`.
+- **Native library updated:** AndroidAwnCore updated to 0.12.0 (also on Maven Central).
+
 ## [0.11.0] - 2025-02-13
 ### Breaking changes
 - **License key validation removed:** The `LicenseManager`, `Crypto`, and `Encoder` classes have been completely removed. The `licenseKeys` parameter was removed from `AwesomeNotificationsFcm.initialize()` and `FcmDefaultsManager.saveDefault()`. Notifications are no longer watermarked with `[DEMO]` prefix on release builds.
